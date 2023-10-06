@@ -14,12 +14,19 @@ class Ev3Partie1(MRJob):
                  ]
     
     #Lecture du fichier LivresAuteursLangues.txt
-      def mapper_get_Lecture1(self, _, line):   
-            yield None, line
+      def mapper_get_Lecture1(self, _, line): 
+             line = line.replace("inconnu"," ")  
+             line = line.replace("Inconnu"," ")  
+             line = line.replace("Inconnue"," ") 
+             line = line.replace("inconnue"," ") 
+             line = line.replace("Langue originale : Français - Titre original","Français") 
+             yield None, line
     #
-      def reducer_Nettoyage1(self, _,livres):
+      def reducer_Nettoyage1(self,_,livres):
+          i=0
           for livre in list(livres):
-              yield _, bytes(livre, 'utf-8')
+              i=i+1
+              yield i, bytes(livre, 'utf-8')
               
       #  for element in AuteursLangues:
          #   if len(element)==1:
